@@ -1,12 +1,11 @@
 
-cQube Release_1.3
+cQube Release_1.4
 
 Prerequisites:
   To Run Selenium python scripts ,Install pycharm in your system
   Google Chrome need to be installed in the server or local machine.
-  Chrome driver need to be downloaded and place this driver file in cQubeTesting-1.3/Driver folder
- 
-  
+  Chrome driver need to be downloaded and place this driver file in cQubeTesting-1.4/Driver folder
+   
 Steps to install the google chrome
 
   Open the terminal (Ctrl+Alt+t) in the ubuntu
@@ -17,16 +16,15 @@ Steps to install the google chrome
 Steps to Download the chrome driver 
 Note: Based on chrome browser version need to download chrome driver 
    https://sites.google.com/a/chromium.org/chromedriver/downloads
-   Unzip the chrome driver and place it in /usr/bin or /usr/local/bin.
 
 Note : Java jdk1.8 need to be already installed in the machine
 
 Steps to execute the test script
 	1.Open the Terminal (Ctrl+Alt+t) in the ubuntu
-	2.Clone the cQubeTesting-1.3 project from github i.e git clone [repository url] 
+	2.Clone the cQubeTesting-1.4 project from github i.e git clone [repository url] 
 	2.sudo apt update
 	3.sudo apt install python3-pip
-	4.Execute the Requirement.txt in the terminal (Requirement.txt file present in the cQubeTesting-1.3 Folder) [mandatory]
+	4.Execute the Requirement.txt in the terminal (Requirement.txt file present in the cQubeTesting-1.4 Folder) [mandatory]
 	    pip3 install -r Requirement.txt 
 	5.Fill the config.ini file (config.ini file present in the cQubeTesting-1.3 Folder).
 
@@ -46,7 +44,7 @@ Steps to execute the test script
 6.To Run the Test scripts
 	for functinal testing of periodic report and composite fallow commnad
 		python3 -m unittest TestSuites/FunctionalTestSuite/Functional_suite.py
-Navigate to cQubeTesting-1.3 Directory in the terminal (ex cd /home/ubuntu/cQubeTesting-1.3)
+Navigate to cQubeTesting-1.3 Directory in the terminal (ex cd /home/ubuntu/cQubeTesting-1.4)
 	For Regression:
 		python3 -m unittest TestSuites/Regression_suite/regression_test_suite.py
 		python3 -m unittest Admin_console/admin_console_regression_testing.py
