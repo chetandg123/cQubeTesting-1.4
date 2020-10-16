@@ -1,9 +1,9 @@
-
 import configparser
 import json
 import os
 import time
 
+import boto
 import psycopg2
 import requests
 from selenium import webdriver
@@ -18,7 +18,6 @@ from get_dir import pwd
 class GetData():
     def __init__(self):
         self.p = pwd()
-
 
     def get_domain_name(self):
         config = configparser.ConfigParser()
@@ -50,17 +49,16 @@ class GetData():
         prefs = {'download.default_directory': self.p.get_download_dir()}
         options.add_experimental_option('prefs', prefs)
         options.add_argument('--headless')
-        self.driver=webdriver.Chrome(options=options,executable_path=self.p.get_driver_path())
+        self.driver = webdriver.Chrome(options=options, executable_path=self.p.get_driver_path())
         return self.driver
 
-
-    def open_cqube_appln(self,driver):
+    def open_cqube_appln(self, driver):
         self.driver = driver
         self.driver.maximize_window()
         self.driver.get(self.get_domain_name())
         self.driver.implicitly_wait(60)
 
-    def login_cqube(self,driver):
+    def login_cqube(self, driver):
         self.driver = driver
         self.driver.implicitly_wait(60)
         self.driver.find_element_by_id(Data.email).send_keys(self.get_username())
@@ -70,7 +68,7 @@ class GetData():
         self.driver.find_element_by_tag_name('button').click()
         self.page_loading(self.driver)
 
-    def login_to_adminconsole(self,driver):
+    def login_to_adminconsole(self, driver):
         self.driver = driver
         self.driver.implicitly_wait(60)
         self.driver.find_element_by_id(Data.email).send_keys(self.get_admin_username())
@@ -105,7 +103,7 @@ class GetData():
         self.driver.find_element_by_id('compositRep').click()
         time.sleep(6)
 
-    def page_loading(self,driver):
+    def page_loading(self, driver):
         try:
             driver.implicitly_wait(5)
             self.driver = driver
@@ -135,7 +133,6 @@ class GetData():
         self.driver.find_element_by_xpath(Data.user_options).click()
         time.sleep(2)
 
-
     def navigate_to_student_report(self):
         self.driver.implicitly_wait(30)
         self.driver.find_element_by_id(Data.Dashboard).click()
@@ -163,7 +160,7 @@ class GetData():
         self.driver.find_element_by_id(Data.Reportmap).click()
         time.sleep(5)
 
-    def select_month_year(self,y,m):
+    def select_month_year(self, y, m):
         year = Select(self.driver.find_element_by_id(Data.sar_year))
         month = Select(self.driver.find_element_by_id(Data.sar_month))
         time.sleep(2)
@@ -181,7 +178,6 @@ class GetData():
         self.driver.find_element_by_id("semReport").click()
         time.sleep(5)
 
-
     def navigate_to_udise_report(self):
         self.driver.implicitly_wait(30)
         self.driver.find_element_by_id(Data.Dashboard).click()
@@ -190,7 +186,6 @@ class GetData():
         time.sleep(2)
         self.driver.find_element_by_id(Data.udise_report).click()
         time.sleep(5)
-
 
     def navigate_to_crc_report(self):
         self.driver.implicitly_wait(30)
@@ -228,8 +223,6 @@ class GetData():
         self.driver.find_element_by_id(Data.column_report).click()
         time.sleep(6)
 
-
-
     def navigate_to_semester_exception(self):
         self.driver.implicitly_wait(20)
         self.driver.find_element_by_id(Data.Dashboard).click()
@@ -243,11 +236,11 @@ class GetData():
         Details = self.driver.find_elements_by_xpath(Data.details)
         time.sleep(5)
         for i in range(len(Details)):
-           print(Details[i].text)
+            print(Details[i].text)
 
     def Click_HomeButton(self):
-            self.driver.find_element_by_id(Data.homeicon).click()
-            time.sleep(3)
+        self.driver.find_element_by_id(Data.homeicon).click()
+        time.sleep(3)
 
     def CRC_footers(self):
         footer = self.driver.find_elements_by_xpath(Data.footer)
@@ -298,12 +291,14 @@ class GetData():
         time.sleep(3)
         self.driver.find_element_by_xpath(Data.crc_sel5).click()
         time.sleep(3)
+
     def crc_table_value(self):
         rows = self.driver.find_elements_by_xpath(Data.distrows)
         for j in range(len(rows)):
             print(rows[j].text)
             time.sleep(2)
-    #SAR_2
+
+    # SAR_2
     def blocks_names(self):
         self.driver.find_element_by_xpath(Data.SAR_Bnames).click()
         time.sleep(15)
@@ -337,8 +332,9 @@ class GetData():
     def test_mouse_over(self):
         self.driver.implicitly_wait(20)
         lists = self.driver.find_elements_by_class_name(Data.dots)
-        count = len(lists)-1
+        count = len(lists) - 1
         time.sleep(5)
+
         def mouseover(i):
             action = ActionChains(self.driver)
             action.move_to_element(lists[i]).perform()
@@ -350,6 +346,7 @@ class GetData():
             mouseover(i)
             i = i + 1
         return count
+
     def Table_data(self):
         tabledata = self.driver.find_elements_by_xpath(Data.distrows)
         for i in range(len(tabledata)):
@@ -365,20 +362,19 @@ class GetData():
             dist[i].click()
             time.sleep(3)
 
-    #Admin login separation
+    # Admin login separation
     def get_admin_domain_name(self):
         config = configparser.ConfigParser()
         config.read(self.p.get_config_ini_path())
         return config['config']['admin_domain']
 
-
-    def open_admin_appln(self,driver):
+    def open_admin_appln(self, driver):
         self.driver = driver
         self.driver.maximize_window()
         self.driver.get(self.get_admin_domain_name())
         self.driver.implicitly_wait(60)
 
-    def login_admin(self,driver):
+    def login_admin(self, driver):
         self.driver = driver
         self.driver.implicitly_wait(60)
         self.driver.find_element_by_id(Data.email).send_keys(self.get_admin_username())
@@ -614,3 +610,18 @@ class GetData():
         self.pat_grades = ['Grade 3.json', 'Grade 4.json', 'Grade 5.json', 'Grade 6.json', 'Grade 7.json',
                            'Grade 8.json']
         return self.pat_grades
+
+    def get_cmp_pat_files(self, timeseries, levels):
+        lst = []
+        for x in range(3, 9):
+            lst.append("pat/{}/{}/Grade {}.json".format(timeseries, levels, x))
+        return lst
+
+    def get_cmp_pat_levels_files(self, timeseries):
+        lst = []
+        lst.append("pat/{}/pat_block.json".format(timeseries))
+        lst.append("pat/{}/pat_cluster.json".format(timeseries))
+        lst.append("pat/{}/pat_district.json".format(timeseries))
+        lst.append("pat/{}/pat_metadata.json".format(timeseries))
+        lst.append("pat/{}/pat_school.json".format(timeseries))
+        return lst
